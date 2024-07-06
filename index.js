@@ -1,13 +1,14 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const Pusher = require('pusher');
 
 // Configuración del servidor Pusher
 const pusher = new Pusher({
-  appId: '1828780',
-  key: '89c6234d11a20345a8fd',
-  secret: '51591d5970e39ba6b563',
-  cluster: 'us2',
+  appId: process.env.PUSHER_APP_ID,
+  key: process.env.PUSHER_KEY,
+  secret: process.env.PUSHER_SECRET,
+  cluster: process.env.PUSHER_CLUSTER,
   useTLS: true
 });
 
