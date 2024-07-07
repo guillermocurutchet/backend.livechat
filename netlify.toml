@@ -3,6 +3,6 @@
   functions = "functions"  # Donde están tus funciones Netlify
 
 [[redirects]]
-  from = "/api/*"  # Redirige las solicitudes API a las funciones de Netlify
-  to = "/.netlify/functions/:splat"
+  from = "/*"
+  to = "/index.html"
   status = 200
