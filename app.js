@@ -1,4 +1,3 @@
-// app.js
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -24,18 +23,12 @@ app.post('/message', (req, res) => {
     return res.status(400).send('Message is required');
   }
 
-  // Enviar el mensaje a Pusher
   pusher.trigger('my-channel', 'my-event', { message })
     .then(() => res.status(200).send('Message sent to Pusher'))
     .catch(err => {
       console.error('Error sending message to Pusher:', err);
       res.status(500).send('Error sending message to Pusher');
     });
-});
-
-// Ruta básica para '/'
-app.get('/', (req, res) => {
-  res.send('Server is running');
 });
 
 app.listen(port, () => {
