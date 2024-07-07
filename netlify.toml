@@ -1,14 +1,8 @@
 [build]
-  functions = "functions"
-  publish = "public"
+  publish = "public"  # Asegúrate de que este directorio tenga tu archivo index.html
+  functions = "functions"  # Donde están tus funciones Netlify
 
 [[redirects]]
-  from = "/*"
-  to = "/index.html"
+  from = "/api/*"  # Redirige las solicitudes API a las funciones de Netlify
+  to = "/.netlify/functions/:splat"
   status = 200
-
-[[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/message"
-  status = 200
-  force = true
