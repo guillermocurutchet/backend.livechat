@@ -1,6 +1,5 @@
 [build]
-  publish = "public"  # Asegúrate de que este directorio tenga tu archivo index.html
-  functions = "functions"  # Donde están tus funciones Netlify
+  functions = "functions"
 
 [[redirects]]
   from = "/*"
