@@ -1,9 +1,11 @@
-require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const Pusher = require('pusher');
+require('dotenv').config();
 
-// Configuración del servidor Pusher
+const app = express();
+const PORT = process.env.PORT || 3000;
+
 const pusher = new Pusher({
   appId: process.env.PUSHER_APP_ID,
   key: process.env.PUSHER_KEY,
@@ -12,28 +14,21 @@ const pusher = new Pusher({
   useTLS: true
 });
 
-const app = express();
-const PORT = process.env.PORT || 3000;
-
-// Middleware
 app.use(bodyParser.json());
 
-// Endpoint para recibir mensajes de Teams
-app.post('/receive-from-teams', (req, res) => {
-  const messageFromTeams = req.body.text;
-  const sender = req.body.from;
-  console.log('Message received from Teams:', messageFromTeams, 'From:', sender);
-
-  // Enviar mensaje a Pusher
-  pusher.trigger('my-channel', 'my-event', {
-    text: messageFromTeams,
-    from: sender,
-    time: new Date().toLocaleTimeString()
-  });
-
-  res.status(200).send('Message received from Teams and sent to Pusher');
+app.post('/message', (req, res) => {
+  const { message } = req.body;
+  if (!message) {
+    return res.status(400).send('Message is required');
+  }
+  pusher.trigger('my-channel', 'my-event', { message })
+    .then(() => res.status(200).send('Message sent to Pusher'))
+    .catch(err => {
+      console.error('Error sending message to Pusher:', err);
+      res.status(500).send('Error sending message to Pusher');
+    });
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
