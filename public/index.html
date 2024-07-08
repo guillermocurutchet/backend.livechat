@@ -334,6 +334,7 @@
 
 <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
 <script>
+// Funciones necesarias
 function toggleContactContainer() {
     var container = document.getElementById('contact-container');
     container.style.display = container.style.display === 'none' ? 'flex' : 'none';
@@ -420,43 +421,6 @@ channel.bind('my-event', function(data) {
   const messageContainer = document.createElement('div');
   messageContainer.className = 'server-message';
   messageContainer.innerHTML = `<p>${data.message} <span style="font-size:0.7em;color:#888;">${new Date().toLocaleTimeString()}</span></p>`;
-  document.getElementById('chat-messages').appendChild(messageContainer);
-});
-
-// Configurar Pusher para recibir mensajes desde el servidor
-const pusher = new Pusher('89c6234d11a20345a8fd', {
-  cluster: 'us2',
-  encrypted: true
-});
-
-const channel = pusher.subscribe('my-channel');
-
-// Escuchar mensajes desde el servidor Pusher
-channel.bind('my-event', function(data) {
-  console.log('Received message from Pusher:', data); // Log para debugging
-  const messageContainer = document.createElement('div');
-  messageContainer.className = 'server-message';
-  messageContainer.innerHTML = `<p>${data.message} <span style="font-size:0.7em;color:#888;">${new Date().toLocaleTimeString()}</span></p>`;
-  document.getElementById('chat-messages').appendChild(messageContainer);
-});
-
-// Configurar Pusher
-const pusher = new Pusher('89c6234d11a20345a8fd', {
-  cluster: 'us2',
-  encrypted: true
-});
-
-const channel = pusher.subscribe('my-channel');
-
-// Escuchar mensajes desde el servidor Pusher
-channel.bind('my-event', function(data) {
-  console.log('Received message from Pusher:', data); // Log para debugging
-
-  const messageText = data.message || 'Mensaje vacío'; // Manejo de mensajes vacíos
-
-  const messageContainer = document.createElement('div');
-  messageContainer.className = 'server-message';
-  messageContainer.innerHTML = `<p>${messageText} <span style="font-size:0.7em;color:#888;">${new Date().toLocaleTimeString()}</span></p>`;
   document.getElementById('chat-messages').appendChild(messageContainer);
 });
 </script>
