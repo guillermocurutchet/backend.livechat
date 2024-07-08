@@ -40,7 +40,7 @@ exports.handler = async function(event, context) {
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ status: 'Message sent' })
+      body: JSON.stringify({ status: 'Message sent to Teams and Pusher' })
     };
   } catch (error) {
     console.error('Error:', error.message);
