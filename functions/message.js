@@ -10,14 +10,14 @@ const pusher = new Pusher({
 
 exports.handler = async function(event, context) {
   try {
-    const { message } = JSON.parse(event.body);
-    console.log('Received message:', message); // Log para debugging
+    const { text, from } = JSON.parse(event.body);
+    console.log('Received message:', text, 'From:', from);
 
-    if (!message) {
+    if (!text) {
       throw new Error('Message is required');
     }
 
-    await pusher.trigger('my-channel', 'my-event', { message });
+    await pusher.trigger('my-channel', 'my-event', { message: text, from });
 
     return {
       statusCode: 200,
