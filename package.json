@@ -2,7 +2,7 @@
   "name": "chat-teams-integration",
   "version": "1.0.0",
   "scripts": {
-    "start": "netlify dev"
+    "start": "netlify dev --port=3000"
   },
   "dependencies": {
     "axios": "^0.21.1",
