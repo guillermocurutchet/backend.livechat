@@ -385,7 +385,7 @@ function sendMessage() {
 }
 
 function sendMessageToWebhook(message) {
-    const webhookUrl = 'https://konecto-livechat.netlify.app/.netlify/functions/message';  // URL de la función Netlify
+    const webhookUrl = 'https://konecto-livechat.netlify.app/.netlify/functions/message';  // Reemplaza con tu URL de Netlify
 
     const payload = {
         message: message,
@@ -406,7 +406,7 @@ function sendMessageToWebhook(message) {
         return response.json();
     })
     .then(data => {
-        console.log('Message sent to Teams through Netlify function:', data);
+        console.log('Message sent to Netlify function:', data);
     })
     .catch(error => {
         console.error('Error sending message to Netlify function:', error);

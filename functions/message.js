@@ -15,7 +15,10 @@ exports.handler = async function(event, context) {
     console.log('Received message:', message, 'From:', from);
 
     if (!message) {
-      throw new Error('Message is required');
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ error: 'Message is required' })
+      };
     }
 
     // Enviar mensaje a Teams
