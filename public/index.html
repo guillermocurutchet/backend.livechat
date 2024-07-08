@@ -6,278 +6,7 @@
     <title>Contact Options</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        body {
-            font-family: 'Space Grotesk', sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        #chat-bubble {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            cursor: pointer;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-            font-size: 1.5rem;
-            background-color: transparent;
-            border: none;
-            box-shadow: none;
-            padding: 0;
-            transition: transform 0.3s ease;
-        }
-        #chat-bubble:hover {
-            transform: scale(1.1);
-        }
-        #chat-bubble i, #chat-label {
-            color: #05D29A;
-        }
-        #chat-label {
-            text-align: center;
-            font-size: 0.8rem;
-            padding: 0;
-            box-shadow: none;
-        }
-        #contact-container {
-            position: fixed;
-            bottom: 70px;
-            right: 20px;
-            display: none;
-            z-index: 1000;
-            font-size: 1.3rem;
-            transition: all 0.3s ease;
-        }
-        #contact-info {
-            background-color: #05D29A;
-            color: white;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            width: 250px;
-        }
-        #additional-options {
-            background-color: #ffffff;
-            display: flex;
-            flex-direction: column;
-        }
-        .option {
-            display: flex;
-            align-items: center;
-            padding: 20px;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-        .option:hover {
-            transform: scale(1.05);
-        }
-        .option:not(:first-child) {
-            border-top: 1px solid #eaeaea;
-        }
-        .option i {
-            font-size: 1.4rem;
-            margin-right: 15px;
-        }
-        .option div {
-            display: flex;
-            flex-direction: column;
-        }
-        .option p {
-            margin: 0;
-            font-size: 1.1rem;
-        }
-        .email-link {
-            text-decoration: none;
-            color: inherit;
-        }
-        #chat-window {
-            --rem: 16px;
-            font-family: Helvetica, Arial, sans-serif;
-            font-weight: 400;
-            font-size: 14px;
-            color: rgb(51, 71, 91);
-            line-height: 24px;
-            box-sizing: border-box;
-            height: 530px;
-            background: rgb(255, 255, 255);
-            transition: bottom 0.25s ease-in-out;
-            margin-left: 24px;
-            margin-right: 0px;
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 376px;
-            border-radius: 8px;
-            box-shadow: 0 5px 20px rgba(0,0,0,.1);
-            display: none;
-            flex-direction: column;
-            padding: 10px;
-            box-sizing: border-box;
-            z-index: 1001;
-        }
-        #chat-header {
-            background-color: #05D29A;
-            color: white;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: start;
-            font-size: 1.2rem;
-            padding-left: 10px;
-            border-top-left-radius: 8px;
-            border-top-right-radius: 8px;
-        }
-        #agent-photo {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            border: 2px solid white;
-            margin-right: 10px;
-            background-image: url('https://stg-konecto-hml.kinsta.cloud/wp-content/uploads/2024/04/handsome-businessman-holding-jacket-shoulder-with-headphones-with-microphone-smiling-showing-thumbs-up-standing-white-background-scaled.jpg');
-            background-size: cover;
-        }
-        #close-tab {
-            position: absolute;
-            top: -35px;
-            right: 5px;
-            background-color: #05D29A;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-        #chat-messages {
-            flex-grow: 1;
-            overflow-y: auto;
-            margin-top: 50px;
-        }
-        #chat-input {
-            display: flex;
-            margin-top: 10px;
-            align-items: center;
-        }
-        #chat-input input {
-            flex-grow: 1;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            outline: none;
-        }
-        #send-button {
-            background-color: transparent;
-            color: #ccc;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            transition: transform 0.3s ease;
-        }
-        #send-button:hover {
-            transform: scale(1.1);
-        }
-        #send-button:focus {
-            outline: none;
-        }
-        #send-button.active {
-            color: #05D29A;
-        }
-        #send-button i {
-            font-size: 1.5rem;
-        }
-        #bot-intro {
-            display: flex;
-            align-items: center;
-            background-color: #f0f0f0;
-            padding: 8px;
-            margin-bottom: 10px;
-            position: relative;
-            border-radius: 10px;
-            margin-left: 20px;
-            margin-right: 20px;
-            max-width: calc(100% - 40px);
-            box-sizing: border-box;
-        }
-        #bot-intro::before {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 0;
-            left: -10px;
-            top: 10px;
-            border-top: 5px solid transparent;
-            border-bottom: 5px solid transparent;
-            border-right: 10px solid #f0f0f0;
-        }
-        #bot-intro p {
-            flex: 1;
-            margin: 0;
-            padding-left: 10px;
-        }
-        .user-message {
-            display: flex;
-            align-items: center;
-            background-color: #cdffeb;
-            padding: 8px;
-            margin-bottom: 10px;
-            position: relative;
-            border-radius: 10px;
-            margin-left: 20px;
-            margin-right: 20px;
-            max-width: calc(100% - 40px);
-            box-sizing: border-box;
-        }
-        .user-message::before {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 0;
-            left: -10px;
-            top: 10px;
-            border-top: 5px solid transparent;
-            border-bottom: 5px solid transparent;
-            border-right: 10px solid #cdffeb;
-        }
-        .server-message {
-            display: flex;
-            align-items: center;
-            background-color: #f0e68c;
-            padding: 8px;
-            margin-bottom: 10px;
-            position: relative;
-            border-radius: 10px;
-            margin-left: 20px;
-            margin-right: 20px;
-            max-width: calc(100% - 40px);
-            box-sizing: border-box;
-        }
-        .server-message::before {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 0;
-            right: -10px;
-            top: 10px;
-            border-top: 5px solid transparent;
-            border-bottom: 5px solid transparent;
-            border-left: 10px solid #f0e68c;
-        }
-        #user-message p, .server-message p {
-            flex: 1;
-            margin: 0;
-            padding-left: 10px;
-        }
+        /* CSS styles here */
     </style>
 </head>
 <body>
@@ -369,9 +98,18 @@ function sendMessage() {
     var input = document.getElementById('message-input');
     var message = input.value.trim();
     if (message) {
-        sendMessageToWebhook(message);
+        var now = new Date();
+        var time = now.getHours() + ':' + (now.getMinutes()<10?'0':'') + now.getMinutes();
+        var messageContainer = document.createElement('div');
+        messageContainer.className = 'user-message';
+        messageContainer.innerHTML = '<p>' + message + ' <span style="font-size:0.7em;color:#888;">' + time + '</span></p>';
+        
+        document.getElementById('chat-messages').appendChild(messageContainer);
         input.value = '';
         document.getElementById('send-button').classList.remove('active');
+        
+        // Función para enviar un mensaje al webhook
+        sendMessageToWebhook(message);
     }
 }
 
@@ -380,7 +118,7 @@ function sendMessageToWebhook(message) {
 
     const payload = {
         message: message,
-        from: 'Website visitor'
+        from: 'Website visitor'  // Aquí puedes agregar lógica para obtener el nombre del usuario si es necesario
     };
 
     fetch(webhookUrl, {
@@ -412,8 +150,9 @@ const pusher = new Pusher('89c6234d11a20345a8fd', {
 
 const channel = pusher.subscribe('my-channel');
 
+// Escuchar mensajes desde el servidor Pusher
 channel.bind('my-event', function(data) {
-  console.log('Received message from Pusher:', data);
+  console.log('Received message from Pusher:', data); // Log para debugging
   const messageContainer = document.createElement('div');
   messageContainer.className = 'server-message';
   messageContainer.innerHTML = `<p>${data.message} <span style="font-size:0.7em;color:#888;">${new Date().toLocaleTimeString()}</span></p>`;
@@ -422,3 +161,4 @@ channel.bind('my-event', function(data) {
 </script>
 </body>
 </html>
+
