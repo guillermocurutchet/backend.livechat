@@ -5,11 +5,11 @@
     "start": "netlify dev --port=3000"
   },
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^1.7.2",
     "dotenv": "^8.2.0",
     "pusher": "^5.0.0"
   },
   "devDependencies": {
-    "netlify-cli": "^6.14.8"
+    "netlify-cli": "^17.33.0"
   }
 }
