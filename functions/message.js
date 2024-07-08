@@ -1,3 +1,4 @@
+const fetch = require('node-fetch');
 const Pusher = require('pusher');
 
 const pusher = new Pusher({
@@ -10,14 +11,29 @@ const pusher = new Pusher({
 
 exports.handler = async function(event, context) {
   try {
-    const { text, from } = JSON.parse(event.body);
-    console.log('Received message:', text, 'From:', from);
+    const { message, from } = JSON.parse(event.body);
+    console.log('Received message:', message, 'From:', from);
 
-    if (!text) {
+    if (!message) {
       throw new Error('Message is required');
     }
 
-    await pusher.trigger('my-channel', 'my-event', { message: text, from });
+    // Enviar mensaje a Teams
+    const webhookUrl = process.env.TEAMS_WEBHOOK_URL;
+    const payload = JSON.stringify({ text: message });
+
+    const response = await fetch(webhookUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: payload
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to send message to Teams');
+    }
+
+    // Enviar mensaje a Pusher
+    await pusher.trigger('my-channel', 'my-event', { message, from });
 
     return {
       statusCode: 200,

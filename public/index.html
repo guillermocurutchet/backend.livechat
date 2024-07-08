@@ -385,10 +385,10 @@ function sendMessage() {
 }
 
 function sendMessageToWebhook(message) {
-    const webhookUrl = 'https://netorgft10577936.webhook.office.com/webhookb2/4961f850-ab2c-41a5-8252-805683668d1f@086788ea-fb12-41fb-9ab5-2085d1b2e62d/IncomingWebhook/a37122fafc784870b62cb343605aa7c7/f41520e6-5984-48f9-a0d9-45ed5b8fc33d';  // Reemplaza con tu URL de Netlify
+    const webhookUrl = 'https://konecto-livechat.netlify.app/.netlify/functions/message';  // URL de la función Netlify
 
     const payload = {
-        text: message,
+        message: message,
         from: 'Website visitor'  // Aquí puedes agregar lógica para obtener el nombre del usuario si es necesario
     };
 
@@ -406,10 +406,10 @@ function sendMessageToWebhook(message) {
         return response.json();
     })
     .then(data => {
-        console.log('Message sent to Teams:', data);
+        console.log('Message sent to Teams through Netlify function:', data);
     })
     .catch(error => {
-        console.error('Error sending message to Teams:', error);
+        console.error('Error sending message to Netlify function:', error);
     });
 }
 
