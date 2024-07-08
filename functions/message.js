@@ -20,9 +20,9 @@ exports.handler = async function(event, context) {
     }
 
     try {
-        // Enviar mensaje a Teams
-        const teamsWebhookUrl = process.env.TEAMS_WEBHOOK_URL;
-        await axios.post(teamsWebhookUrl, {
+        // Enviar mensaje a Make
+        const makeWebhookUrl = process.env.MAKE_WEBHOOK_URL;
+        await axios.post(makeWebhookUrl, {
             text: `${from}: ${message}`
         });
 
@@ -41,6 +41,37 @@ exports.handler = async function(event, context) {
         return {
             statusCode: 500,
             body: JSON.stringify({ error: 'Error sending message' })
+        };
+    }
+};
+
+// Endpoint para recibir respuestas desde Make
+exports.responseHandler = async function(event, context) {
+    const { text } = JSON.parse(event.body);
+
+    if (!text) {
+        return {
+            statusCode: 400,
+            body: JSON.stringify({ error: 'Response text is required' })
+        };
+    }
+
+    try {
+        // Enviar respuesta a Pusher para actualizar el chat en el sitio web
+        await pusher.trigger('my-channel', 'my-event', {
+            message: text,
+            from: 'Teams'
+        });
+
+        return {
+            statusCode: 200,
+            body: JSON.stringify({ success: true, message: 'Response sent to Pusher' })
+        };
+    } catch (error) {
+        console.error('Error sending response:', error);
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ error: 'Error sending response' })
         };
     }
 };
