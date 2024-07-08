@@ -385,7 +385,7 @@ function sendMessage() {
 }
 
 function sendMessageToWebhook(message) {
-    const webhookUrl = 'https://hook.us1.make.com/quow3yiuhpull5y36339htd5dgrvwbnx';  // Reemplaza con tu URL de Netlify
+    const webhookUrl = 'https://konecto-livechat.netlify.app/.netlify/functions/message';  // Reemplaza con tu URL de Netlify
 
     const payload = {
         message: message,
@@ -399,14 +399,13 @@ function sendMessageToWebhook(message) {
         },
         body: JSON.stringify(payload)
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
-        console.log('Message sent to Make:', data);
+        if (data.error) {
+            console.error('Error sending message to Make:', data.error);
+        } else {
+            console.log('Message sent to Make:', data);
+        }
     })
     .catch(error => {
         console.error('Error sending message to Make:', error);
@@ -424,9 +423,12 @@ const channel = pusher.subscribe('my-channel');
 // Escuchar mensajes desde el servidor Pusher
 channel.bind('my-event', function(data) {
   console.log('Received message from Pusher:', data); // Log para debugging
+
+  const messageText = data.message || 'Mensaje vacío'; // Manejo de mensajes vacíos
+
   const messageContainer = document.createElement('div');
   messageContainer.className = 'server-message';
-  messageContainer.innerHTML = `<p>${data.message} <span style="font-size:0.7em;color:#888;">${new Date().toLocaleTimeString()}</span></p>`;
+  messageContainer.innerHTML = `<p>${messageText} <span style="font-size:0.7em;color:#888;">${new Date().toLocaleTimeString()}</span></p>`;
   document.getElementById('chat-messages').appendChild(messageContainer);
 });
 </script>

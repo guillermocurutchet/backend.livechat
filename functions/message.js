@@ -5,13 +5,17 @@ const pusher = new Pusher({
   key: process.env.PUSHER_KEY,
   secret: process.env.PUSHER_SECRET,
   cluster: process.env.PUSHER_CLUSTER,
-  useTLS: true
+  encrypted: true
 });
 
 exports.handler = async function(event, context) {
   try {
     const { message } = JSON.parse(event.body);
     console.log('Received message:', message); // Log para debugging
+
+    if (!message) {
+      throw new Error('Message is required');
+    }
 
     await pusher.trigger('my-channel', 'my-event', { message });
 
@@ -20,10 +24,11 @@ exports.handler = async function(event, context) {
       body: JSON.stringify({ status: 'Message sent' })
     };
   } catch (error) {
-    console.error('Error parsing message:', error);
+    console.error('Error:', error.message);
+
     return {
       statusCode: 400,
-      body: JSON.stringify({ status: 'Invalid JSON input' })
+      body: JSON.stringify({ error: error.message })
     };
   }
 };
