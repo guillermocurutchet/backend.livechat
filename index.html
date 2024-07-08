@@ -376,7 +376,7 @@ function sendMessage() {
 }
 
 function sendMessageToWebhook(message) {
-    const webhookUrl = 'https://konecto-livechat.netlify.app/.netlify/functions/message';  // Reemplaza con tu URL de Netlify
+    const webhookUrl = '/.netlify/functions/message';  // Endpoint para Netlify Functions
 
     const payload = {
         message: message,
