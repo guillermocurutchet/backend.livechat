@@ -10,16 +10,16 @@ const pusher = new Pusher({
 });
 
 exports.handler = async function(event, context) {
-    const { message, from } = JSON.parse(event.body);
-
-    if (!message) {
-        return {
-            statusCode: 400,
-            body: JSON.stringify({ error: 'Message is required' })
-        };
-    }
-
     try {
+        const { message, from } = JSON.parse(event.body);
+
+        if (!message) {
+            return {
+                statusCode: 400,
+                body: JSON.stringify({ error: 'Message is required' })
+            };
+        }
+
         // Enviar mensaje a Make
         const makeWebhookUrl = process.env.MAKE_WEBHOOK_URL;
         await axios.post(makeWebhookUrl, {
@@ -47,16 +47,16 @@ exports.handler = async function(event, context) {
 
 // Endpoint para recibir respuestas desde Make
 exports.responseHandler = async function(event, context) {
-    const { text } = JSON.parse(event.body);
-
-    if (!text) {
-        return {
-            statusCode: 400,
-            body: JSON.stringify({ error: 'Response text is required' })
-        };
-    }
-
     try {
+        const { text } = JSON.parse(event.body);
+
+        if (!text) {
+            return {
+                statusCode: 400,
+                body: JSON.stringify({ error: 'Response text is required' })
+            };
+        }
+
         // Enviar respuesta a Pusher para actualizar el chat en el sitio web
         await pusher.trigger('my-channel', 'my-event', {
             message: text,
@@ -75,4 +75,3 @@ exports.responseHandler = async function(event, context) {
         };
     }
 };
-

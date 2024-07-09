@@ -372,6 +372,7 @@ function sendMessage() {
         sendMessageToWebhook(message);
         input.value = '';
         document.getElementById('send-button').classList.remove('active');
+        addMessageToChat(message, 'user-message');
     }
 }
 
@@ -401,7 +402,15 @@ function sendMessageToWebhook(message) {
     })
     .catch(error => {
         console.error('Error sending message to Netlify function:', error);
+        alert('Error sending message: ' + error.message);
     });
+}
+
+function addMessageToChat(message, className) {
+    const messageContainer = document.createElement('div');
+    messageContainer.className = className;
+    messageContainer.innerHTML = `<p>${message} <span style="font-size:0.7em;color:#888;">${new Date().toLocaleTimeString()}</span></p>`;
+    document.getElementById('chat-messages').appendChild(messageContainer);
 }
 
 // Configurar Pusher
@@ -414,11 +423,9 @@ const channel = pusher.subscribe('my-channel');
 
 channel.bind('my-event', function(data) {
   console.log('Received message from Pusher:', data);
-  const messageContainer = document.createElement('div');
-  messageContainer.className = data.from === 'Teams' ? 'server-message' : 'user-message';
-  messageContainer.innerHTML = `<p>${data.message} <span style="font-size:0.7em;color:#888;">${new Date().toLocaleTimeString()}</span></p>`;
-  document.getElementById('chat-messages').appendChild(messageContainer);
+  addMessageToChat(data.message, data.from === 'Teams' ? 'server-message' : 'user-message');
 });
 </script>
 </body>
 </html>
+
