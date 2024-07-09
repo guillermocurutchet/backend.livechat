@@ -415,7 +415,7 @@ const channel = pusher.subscribe('my-channel');
 channel.bind('my-event', function(data) {
   console.log('Received message from Pusher:', data);
   const messageContainer = document.createElement('div');
-  messageContainer.className = 'server-message';
+  messageContainer.className = data.from === 'Teams' ? 'server-message' : 'user-message';
   messageContainer.innerHTML = `<p>${data.message} <span style="font-size:0.7em;color:#888;">${new Date().toLocaleTimeString()}</span></p>`;
   document.getElementById('chat-messages').appendChild(messageContainer);
 });
