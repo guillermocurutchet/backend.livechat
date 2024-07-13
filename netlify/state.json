@@ -1,0 +1,19 @@
+{
+	"geolocation": {
+		"data": {
+			"city": "Rosario",
+			"country": {
+				"code": "AR",
+				"name": "Argentina"
+			},
+			"subdivision": {
+				"code": "S",
+				"name": "Santa Fe"
+			},
+			"timezone": "America/Argentina/Cordoba",
+			"latitude": -32.9518,
+			"longitude": -60.6839
+		},
+		"timestamp": 1720462637517
+	}
+}
