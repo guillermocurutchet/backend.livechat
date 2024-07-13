@@ -32,6 +32,12 @@ exports.handler = async function(event, context) {
             from: from
         });
 
+        // Enviar mensaje a Microsoft Teams
+        const teamsWebhookUrl = process.env.TEAMS_WEBHOOK_URL;
+        await axios.post(teamsWebhookUrl, {
+            text: `${from}: ${message}`
+        });
+
         return {
             statusCode: 200,
             body: JSON.stringify({ success: true, message: 'Message sent' })
