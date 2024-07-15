@@ -393,7 +393,9 @@ function sendMessageToWebhook(message) {
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+            return response.json().then(err => {
+                throw new Error(`Network response was not ok: ${err.error}`);
+            });
         }
         return response.json();
     })
@@ -405,6 +407,7 @@ function sendMessageToWebhook(message) {
         alert('Error sending message: ' + error.message);
     });
 }
+
 
 function addMessageToChat(message, className) {
     const messageContainer = document.createElement('div');
